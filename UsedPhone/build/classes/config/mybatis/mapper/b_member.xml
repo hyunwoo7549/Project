@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="b_member">
+
+	<!-- 아이디 중복체크 -->
+	<select id="checkId" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT B_ID FROM BUSINESS_MEMBER WHERE B_ID = #{paramId}
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="insertUserData" parameterType="vo.B_MemberVO">
+		INSERT INTO BUSINESS_MEMBER VALUES ( seq_b.nextVal, #{b_id}, #{b_pwd}, #{b_phone}, #{b_businessnumber}, #{b_mutualname}, #{b_wallet}, #{master} )
+	</insert>
+	
+	<!-- 회원정보가 있는지 조회 -->	
+	<select id="searchUserData" parameterType="java.util.Map" resultType="java.lang.String">	
+		SELECT B_ID, B_PWD FROM BUSINESS_MEMBER WHERE B_ID = #{id} AND B_PWD = #{pwd}
+	</select>
+	
+	<!-- 회원정보가 있으면 모든 회원정보 가져오기 -->	
+	<select id="getUserData" parameterType="java.lang.String" resultType="vo.B_MemberVO">	
+		SELECT * FROM BUSINESS_MEMBER WHERE B_ID = #{id}
+	</select>
+	
+	<!-- 회원정보수정 -->
+	<update id="updateUserData" parameterType="vo.B_MemberVO">
+		UPDATE BUSINESS_MEMBER SET B_PHONE =
+		 	#{b_phone}, B_BUSINESSNUMBER = #{b_businessnumber}, B_MUTUALNAME = #{b_mutualname} WHERE B_ID = #{b_id}
+	</update>
+	
+	<!-- 비밀번호수정 -->
+	<update id="updateUserPwd" parameterType="vo.B_MemberVO">
+		UPDATE BUSINESS_MEMBER SET B_PWD = #{b_pwd} WHERE B_ID = #{b_id}
+	</update>
+	
+	<!-- 비밀번호찾기 -->
+	<select id="searchUserPwd" parameterType="java.util.Map" resultType="java.lang.String">
+		SELECT B_PWD FROM BUSINESS_MEMBER WHERE B_ID = #{id} AND B_PHONE = #{phonenumber}
+	</select>
+	
+	<!-- 회원탈퇴 -->
+	<delete id="deleteUserData" parameterType="java.lang.String">
+		DELETE FROM BUSINESS_MEMBER WHERE B_ID = #{id}
+	</delete>
+	
+	<!-- 탈퇴한 회원 연령대와 사유 저장 -->
+	<insert id="insertLeavingReason" parameterType="java.util.Map">
+		INSERT INTO LEAVING_MEMBER VALUES ( seq_l.nextVal, #{ages}, #{reason}, sysdate, #{id} )
+	</insert>
+	
+	<!-- 물건 판매체결되면 사업자회원 돈 차감 -->
+	<update id="dropMoney" parameterType="java.util.Map">
+		UPDATE BUSINESS_MEMBER SET B_WALLET = B_WALLET - CAST(#{completionprice} AS INT) where b_id = CAST(#{b_id} AS VARCHAR(20))
+	</update>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

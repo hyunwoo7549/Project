@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<!-- 별칭주기
+	<typeAliases>
+		<typeAlias type="vo.ProductVO" alias="product"/> 
+		<typeAlias type="vo.CartVO" alias="cart"/>
+		<typeAlias type="vo.UserVO" alias="user"/>
+	</typeAliases>  -->
+	
+	<typeAliases>
+		<typeAlias alias="free_board" type="vo.Free_BoardVO"/>
+		<typeAlias alias="comment" type="vo.CommentVO"/>
+	</typeAliases>
+
+	<environments default="">
+		<environment id="">
+			<transactionManager type="JDBC" />
+			<dataSource type="JNDI">
+				<property name="data_source" value="java:comp/env/jdbc/oracle_test"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		<mapper resource="config/mybatis/mapper/b_member.xml" />
+		<mapper resource="config/mybatis/mapper/g_member.xml" />
+		<mapper resource="config/mybatis/mapper/phone.xml" />
+		<mapper resource="config/mybatis/mapper/free_board.xml"/>
+		<mapper resource="config/mybatis/mapper/buyer.xml"/>
+		<mapper resource="config/mybatis/mapper/comment.xml"/>
+		<mapper resource="config/mybatis/mapper/master.xml"/>
+	</mappers>
+</configuration>
+
+
+
+
+
+
+
